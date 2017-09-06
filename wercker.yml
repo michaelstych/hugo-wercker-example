@@ -1,15 +1,14 @@
 box: debian
 build:
-  steps:
-  - arjen/hugo-build@1.19.0
-        version: "0.24.1"
-        theme: herring-cove
-        flags: --buildDrafts=true
+    steps:
+        - arjen/hugo-build:
+            theme: herring-cove
 deploy:
-  steps:
-    - install-packages:
-        packages: git ssh-client
-    - lukevivier/gh-pages@0.2.1:
-        token: $GIT_TOKEN
-        domain: hugo-wercker.ig.nore.me
-        basedir: public
+    steps:
+        - install-packages:
+            packages: git ssh-client
+        - leipert/git-push:
+            gh_oauth: $GIT_TOKEN
+            repo: skarlso/skarlso.github.io
+            branch: master
+            basedir: public
